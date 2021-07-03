@@ -67,20 +67,23 @@ function remove(e){
     }
 }
 
-function completeTodo(){
+function completeTodo(e){
+    //클릭한 요소의 state가 변경되어야한다.
     // console.log(e.target.parentNode.dataset.id);
 
     // const id = e.target.parentNode.dataset.id;
 
-    for(let i = 0; i < data.length; ++i){
-        if(data[i].state == 0){
-            data[i].state = 1
-            printList();
-        }else{
-            data[i].state = 0
-            printList();
+    for(let i = 0; i < data.length; ++i) {
+        if(e.target.parentNode.dataset.id == data[i].id) {
+            if(data[i].state == 1){
+                data[i].state = 0
+            }else{
+                data[i].state = 1
+            }
+            printList()
         }
     }
+
 }
 
     //삭제
