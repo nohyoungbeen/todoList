@@ -58,32 +58,28 @@ function remove(e){
     // 배열에서 삭제
     const id = e.target.parentNode.dataset.id;
 
-    for(let i = 0; i < data.length; ++i){
-
-        if( data[i].id == id ){
-            data.splice(i, 1) //삭제할 요소 index, 갯수
+    
+    const index = data.findIndex(x => x.id ==e.target.parentNode.dataset.id)
+        if( data[index].id == id ){
+            data.splice(index, 1) //삭제할 요소 index, 갯수
             printList();
         }
-    }
+    
 }
 
 function completeTodo(e){
     //클릭한 요소의 state가 변경되어야한다.
     // console.log(e.target.parentNode.dataset.id);
 
-    // const id = e.target.parentNode.dataset.id;
+    const id = e.target.parentNode.dataset.id;
 
-    for(let i = 0; i < data.length; ++i) {
-        if(e.target.parentNode.dataset.id == data[i].id) {
-            if(data[i].state == 1){
-                data[i].state = 0
+        const index = data.findIndex(x => x.id ==e.target.parentNode.dataset.id)
+            if(data[index].state == 1){
+                data[index].state = 0
             }else{
-                data[i].state = 1
+                data[index].state = 1
             }
             printList()
-        }
-    }
-
 }
 
     //삭제
