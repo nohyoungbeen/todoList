@@ -1,12 +1,12 @@
 const data = [
     {
         id:1,
-        state:0,
+        state:0, //0번째 배열
         content:'todo1',
     },
     {
         id:2,
-        state:0,
+        state:0, // 1번째 배열
         content:'todo2'
     }
 ]
@@ -19,7 +19,9 @@ printList();
 
 //추가
 addButton.addEventListener('click', function (){
-    data.push({id:3, state:0, content:'todo3'})
+    data.push({id:data[data.length-1].id + 1 , state:0, content:putTodoList.value})
+    putTodoList.value = ''
+    console.log(data.id)
     printList();
 })
 
