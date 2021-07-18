@@ -1,74 +1,73 @@
-const data = [
-  {
-    id: 1,
-    state: 0,
-    content: "todo1",
-  },
-  {
-    id: 2,
-    state: 0,
-    content: "todo2",
-  },
-];
+const data = [];
 
+const inputTodo = document.querySelector("#inputTodo");
+const addBtn = document.querySelector("#addBtn");
 const todoList = document.querySelector("#todoList");
-const addButton = document.querySelector("#addButton");
-const putTodoList = document.querySelector("#putTodoList");
+
+console.log(inputTodo);
+console.log(addBtn);
+console.log(todoList);
 
 printList();
 
-//추가
-addButton.addEventListener("click", function () {
+addBtn.addEventListener("click", function () {
+  //const id = data[0] ? data[data.length - 1 ].id + 1 : 1
+  // if(data[0] != null){
+  //     id = data[data.length - 1 ].id + 1
+  // }
   data.push({
-    id: data[data.length - 1].id + 1,
+    id: data[0] ? data[data.length - 1].id + 1 : 1,
     state: 0,
-    content: putTodoList.value,
+    content: inputTodo.value,
   });
-  putTodoList.value = "";
-  console.log(data.id);
+  inputTodo.value = "";
   printList();
 });
 
-//불러오기
+todoList.addEventListener("click", (e) => {
+  if (e.target.className == "removeBtn") {
+    remove(e);
+  }
+  if (e.target.className == "completeBtn") {
+    completeTodo(e);
+  }
+});
+
 function printList() {
   todoList.innerHTML = data
     .map(
       (todo) => `
-        <li class="li" data-id="${todo.id}">
-            <span class="todoList ${todo.state == 1 ? "completedList" : ""}">${
+        <li class="List" data-id="${todo.id}">
+            <span class="${todo.state == 1 ? "completedList" : ""}"> ${
         todo.content
-      }</span>
-            <button class="deleteBtn">X</button>
-            <button class="complete">V</button>
+      } </span>
+            <button class="completeBtn">V</button>
+            <button class="removeBtn">X</button>
         </li>`
     )
     .join("");
 
-  const deleteBtn = document.querySelectorAll(".deleteBtn");
-  deleteBtn.forEach((x) => x.addEventListener("click", remove));
+  //   const completeBtn = document.querySelectorAll(".completeBtn");
+  //   completeBtn.forEach((v) => v.addEventListener("click", completeTodo));
 
-  const complete = document.querySelectorAll(".complete");
-
-  complete.forEach((x) => x.addEventListener("click", completeTodo));
-}
-
-function remove(e) {
-  console.log(e.target.parentNode.dataset.id);
-  const id = e.target.parentNode.dataset.id;
-  const index = data.findIndex((x) => x.id == e.target.parentNode.dataset.id);
-  if (data[index].id == id) {
-    data.splice(index, 1); 
-    printList();
-  }
+  //   const removeBtn = document.querySelectorAll(".removeBtn");
+  //   removeBtn.forEach((x) => x.addEventListener("click", remove));
 }
 
 function completeTodo(e) {
-  const index = data.findIndex((x) => x.id == e.target.parentNode.dataset.id);
-
-  if (data[index].state == 1) {
-    data[index].state = 0;
-  } else {
+  const id = e.target.parentNode.dataset.id;
+  const index = data.findIndex((v) => v.id == id);
+  if (data[index].state == 0) {
     data[index].state = 1;
+  } else {
+    data[index].state = 0;
   }
+  printList();
+}
+
+function remove(e) {
+  const id = e.target.parentNode.dataset.id;
+  const index = data.findIndex((x) => x.id == id);
+  data.splice(index, 1);
   printList();
 }
